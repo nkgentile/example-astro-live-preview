@@ -1,15 +1,22 @@
 ---
+import { useSanityClient } from "@sanity/astro";
+import { Preview } from "../components/Articles";
+
+const client = useSanityClient();
+const initialData = await client.fetch(`*[_type == "article"]`);
+const token = import.meta.env.SANITY_API_TOKEN
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <h1>Astro</h1>
+    <Preview initialData={initialData} token={token} client:only="react" />
+  </body>
 </html>
